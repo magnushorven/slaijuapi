@@ -39,7 +39,7 @@ app.post('/set', (req, res) => {
 })
 
 app.delete('/set', (req, res) => {
-  db.collection('quotes').findOneAndDelete({name: req.body.name}, (err, result) => {
+  db.collection('set').findOneAndDelete({_id: req.body.id}, (err, result) => {
     if (err) res.json({"success":false})
     res.json({"success":true})
   })
