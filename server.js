@@ -3,6 +3,7 @@ const Cors = require("cors")
 const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
+const ObjectId = require('mongodb').ObjectID;
 const moment = require('moment')
 var db
 
@@ -39,7 +40,7 @@ app.post('/set', (req, res) => {
 })
 
 app.delete('/set', (req, res) => {
-  db.collection('set').findOneAndDelete({_id: req.body.id}, (err, result) => {
+  db.collection('set').findOneAndDelete({_id: ObjectId(req.body.id)}, (err, result) => {
     if (err) res.json({"success":false})
     res.json({"success":true})
   })
