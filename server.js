@@ -30,7 +30,6 @@ app.get('/set', (req, res) => {
     res.json(result)
   })
 })
-
 app.post('/set', (req, res) => {
   db.collection('set').save(req.body, (err, result) => {
     if (err) res.json({"success":false})
@@ -38,10 +37,31 @@ app.post('/set', (req, res) => {
     res.json({"success":true})
   })
 })
-
 app.delete('/set', (req, res) => {
   db.collection('set').findOneAndDelete({_id: ObjectId(req.body.id)}, (err, result) => {
     if (err) res.json({"success":false})
     res.json({"success":true})
+  })
+})
+
+app.get('/goal', (req, res) => {
+  db.collection('goal').find().toArray((err, result) => {
+    if (err) res.json({"success":false,"result":err})
+    console.log(result)
+    res.json(result)
+  })
+})
+app.put('/goal', (req, res) => {
+  db.collection('goal')
+  .findOneAndUpdate({name: 'weeklyGoal'}, {
+    $set: {
+      weeklyGoal: req.body.weeklyGoal
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.json({"success":false,"result":err})
+    res.json(result)
   })
 })
